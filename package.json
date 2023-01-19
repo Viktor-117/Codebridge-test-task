@@ -2,7 +2,13 @@
   "name": "codebridge-test-task",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Viktor-117.github.io/Codebridge-test-task/",
   "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.5",
+    "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,9 +16,15 @@
     "@types/node": "^16.18.11",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
+    "@types/react-redux": "^7.1.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.7.0",
     "react-scripts": "5.0.1",
+    "redux": "^4.2.0",
+    "styled-components": "^5.3.6",
+    "typeface-montserrat": "^1.1.13",
     "typescript": "^4.9.4",
     "web-vitals": "^2.1.4"
   },
@@ -39,5 +51,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.26"
   }
 }
