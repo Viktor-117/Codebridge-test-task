@@ -1,4 +1,6 @@
 // import Box from "@mui/material/Box";
+import { useEffect } from "react";
+import { useAppDispatch } from "hooks/hook";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import Typography from "@mui/material/Typography";
@@ -6,10 +8,17 @@ import TextField from "@mui/material/TextField";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { Container } from "./HomeView.styled";
+import fetchArticle from "../redux/operations";
 
 const theme = createTheme({ spacing: 10 });
 
 const HomeView: React.FC = () => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchArticle());
+  }, [dispatch]);
+
   return (
     <Container>
       <ThemeProvider theme={theme}>
