@@ -9,6 +9,7 @@ import date from "images/date.svg";
 // import { useAppDispatch } from "hooks/hook";
 
 interface ArticleProps {
+  filter?: string;
   imageUrl: string;
   title: string;
   summary: string;
@@ -16,11 +17,13 @@ interface ArticleProps {
 }
 
 const ArticleCard: React.FC<ArticleProps> = ({
+  filter,
   imageUrl,
   title,
   summary,
   publishedAt,
 }) => {
+  console.log(filter);
   //   const dispatch = useAppDispatch();
   const shortSummary = () => {
     if (summary.length > 100) {
@@ -30,7 +33,21 @@ const ArticleCard: React.FC<ArticleProps> = ({
 
   const shortTitle = () => {
     if (title.length > 100) {
-      return title.slice(0, 100).concat("...");
+      const shortTitle = title.slice(0, 100).concat("...");
+      if (filter) {
+        const filteredTitle = shortTitle.replace(
+          filter,
+          `<mark>${filter}</mark>`
+        );
+        console.log(filteredTitle);
+        return filteredTitle;
+      }
+      return shortTitle;
+    } else if (filter) {
+      const replaceText = `</p><mark>${filter}</mark><p>`;
+      const filteredTitle = title.replace(filter, replaceText);
+      console.log(filteredTitle);
+      return filteredTitle;
     } else return title;
   };
 
@@ -63,7 +80,6 @@ const ArticleCard: React.FC<ArticleProps> = ({
           return day + "th";
       }
     };
-    console.log(date.getFullYear());
     const newDate = `${month[date.getMonth()]} ${day()} ${date.getFullYear()}`;
     return newDate;
   };

@@ -1,5 +1,6 @@
 // import Box from "@mui/material/Box";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Suspense } from "react";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
@@ -9,22 +10,31 @@ import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { RotatingLines } from "react-loader-spinner";
 import { Container, Box } from "./HomeView.styled";
-import fetchArticle from "../redux/operations";
+import { fetchArticle, fetchFilteredArticle } from "../redux/operations";
 import ArticleCard from "components/ArticleCard";
 
 const theme = createTheme({ spacing: 10 });
 
 const HomeView: React.FC = () => {
   const articles = useAppSelector((state) => state.articles.articles);
-  const isLoading: boolean = useAppSelector(
-    (state) => state.articles.isLoading
+  const filteredArticles = useAppSelector(
+    (state) => state.articles.filteredArticles
   );
+  const filtered = useAppSelector((state) => state.articles.filtered);
+  const isLoading = useAppSelector((state) => state.articles.isLoading);
+
+  const [value, setValue] = useState("");
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchArticle());
   }, [dispatch]);
+
+  const handleChange = (e: { target: { value: string } }) => {
+    setValue(e.target.value);
+    dispatch(fetchFilteredArticle(value));
+  };
 
   return (
     <Container>
@@ -49,6 +59,8 @@ const HomeView: React.FC = () => {
             borderRadius: "5px",
           }}
           variant="outlined"
+          value={value}
+          onChange={handleChange}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -69,14 +81,24 @@ const HomeView: React.FC = () => {
             borderBottom: "1px solid #EAEAEA",
           }}
         >
-          Results:
+          Results: {articles.length}
         </Typography>
         <Box>
-          {isLoading && <RotatingLines strokeColor="#3B8AD9" />}
-          {articles &&
-            articles.map((article) => {
-              return <ArticleCard key={article.id} {...article} />;
-            })}
+          <Suspense>
+            {isLoading && <RotatingLines strokeColor="#3B8AD9" />}
+            {articles &&
+              !filtered &&
+              articles.map((article) => {
+                return <ArticleCard key={article.id} {...article} />;
+              })}
+            {filteredArticles &&
+              filtered &&
+              filteredArticles.map((article) => {
+                return (
+                  <ArticleCard key={article.id} filter={value} {...article} />
+                );
+              })}
+          </Suspense>
         </Box>
       </ThemeProvider>
     </Container>

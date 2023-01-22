@@ -4,7 +4,7 @@ import { ArticleSchema } from "./articleSlice";
 
 axios.defaults.baseURL = "https://api.spaceflightnewsapi.net/";
 
-const fetchArticle = createAsyncThunk<
+export const fetchArticle = createAsyncThunk<
   ArticleSchema[],
   undefined,
   { rejectValue: string }
@@ -17,4 +17,19 @@ const fetchArticle = createAsyncThunk<
   return response.data as ArticleSchema[];
 });
 
-export default fetchArticle;
+export const fetchFilteredArticle = createAsyncThunk<
+  ArticleSchema[],
+  string,
+  { rejectValue: string }
+>("articles/fetchFilteredArticle", async (filter, { rejectWithValue }) => {
+  const response = await axios.get(
+    `v3/articles?_limit=9&title_contains=${filter}&summary_contains=${filter}`
+  );
+  console.log(response.data);
+  if (!response.data) {
+    return rejectWithValue("Ooops! Something went wrong");
+  }
+  return response.data;
+});
+
+// export default fetchArticle;

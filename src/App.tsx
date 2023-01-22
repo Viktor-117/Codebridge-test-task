@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<HomeView />}></Route>
-      <Route path="/article" element={<ArticleView />} />
+      <Route path="/article/:articleId" element={<ArticleView />} />
     </Routes>
     // <div className="App">
     //   <header className="App-header">

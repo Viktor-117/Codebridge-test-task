@@ -4,7 +4,7 @@ import {
   PayloadAction,
   AnyAction,
 } from "@reduxjs/toolkit";
-import fetchArticles from "./operations";
+import { fetchArticle, fetchFilteredArticle } from "./operations";
 
 export type ArticleSchema = {
   id: number;
@@ -31,12 +31,16 @@ export type ArticleSchema = {
 
 export type Article = {
   articles: ArticleSchema[] | [];
+  filteredArticles: ArticleSchema[] | [];
+  filtered: boolean;
   isLoading: boolean;
   error: string | null;
 };
 
 const initialState: Article = {
   articles: [],
+  filteredArticles: [],
+  filtered: false,
   isLoading: false,
   error: null,
 };
@@ -52,13 +56,24 @@ const articleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchArticles.pending, (state) => {
+      .addCase(fetchArticle.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(fetchArticles.fulfilled, (state, action) => {
+      .addCase(fetchArticle.fulfilled, (state, action) => {
         state.articles = action.payload;
         state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(fetchFilteredArticle.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchFilteredArticle.fulfilled, (state, action) => {
+        state.filteredArticles = action.payload;
+        state.isLoading = false;
+        state.filtered = true;
+        state.error = null;
       })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;
