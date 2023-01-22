@@ -9,7 +9,7 @@ const fetchArticle = createAsyncThunk<
   undefined,
   { rejectValue: string }
 >("articles/fetchArticles", async (_, thunkAPI) => {
-  const response = await axios.get("v3/articles?_limit=100");
+  const response = await axios.get("v3/articles?_limit=9");
   console.log(response.data);
   if (!response.data) {
     return thunkAPI.rejectWithValue("Ooops! Something went wrong");

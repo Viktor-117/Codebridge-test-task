@@ -23,19 +23,18 @@ const ArticleCard: React.FC<ArticleProps> = ({
 }) => {
   //   const dispatch = useAppDispatch();
   const shortSummary = () => {
-    if (summary.split(" ").length > 25) {
-      return summary.split(" ").slice(0, 25).join(" ").concat(" ...");
+    if (summary.length > 100) {
+      return summary.slice(0, 100).concat("...");
     } else return summary;
   };
 
   const shortTitle = () => {
-    if (title.split(" ").length > 10) {
-      return title.split(" ").slice(0, 10).join(" ").concat(" ...");
+    if (title.length > 100) {
+      return title.slice(0, 100).concat("...");
     } else return title;
   };
 
   const dateText = () => {
-    // const parsedDate: number = Date.parse(publishedAt);
     const date: Date = new Date(publishedAt);
     const month = [
       "Jan",
@@ -73,12 +72,12 @@ const ArticleCard: React.FC<ArticleProps> = ({
     <Card sx={{ maxWidth: 400 }}>
       <CardActionArea>
         <CardMedia component="img" height="140" image={imageUrl} alt={title} />
-        <CardContent sx={{ padding: "25px" }}>
+        <CardContent sx={{ padding: "25px", paddingBottom: 0 }}>
           <DateImg src={date} alt="date" />
           <DateText>{dateText()}</DateText>
           <Typography
             sx={{
-              height: 88,
+              height: 117,
               fontFamily: "Montserrat",
               fontSize: 24,
               lineHeight: 1.2,
@@ -92,7 +91,7 @@ const ArticleCard: React.FC<ArticleProps> = ({
           </Typography>
           <Typography
             sx={{
-              height: 120,
+              height: 72,
               fontFamily: "Montserrat",
               fontSize: 16,
               lineHeight: 1.5,

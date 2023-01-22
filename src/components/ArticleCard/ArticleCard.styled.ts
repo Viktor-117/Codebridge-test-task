@@ -7,8 +7,7 @@ export const Link = styled(NavLink)`
   font-weight: 700;
   font-size: 16;
   line-height: 1.5;
-  padding-left: 25px;
-  padding-bottom: 25px;
+  padding: 25px;
   text-decoration: none;
 `;
 
