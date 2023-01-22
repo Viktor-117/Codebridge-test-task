@@ -30,5 +30,4 @@ export const DateImg = styled.img`
   width: 13.5px;
   height: 13.5px;
   margin-right: 9px;
-  color: #868686;
 `;

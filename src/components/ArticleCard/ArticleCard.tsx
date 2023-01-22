@@ -35,8 +35,8 @@ const ArticleCard: React.FC<ArticleProps> = ({
   };
 
   const dateText = () => {
-    const parsedDate: number = Date.parse(publishedAt);
-    const date: Date = new Date(parsedDate * 1000);
+    // const parsedDate: number = Date.parse(publishedAt);
+    const date: Date = new Date(publishedAt);
     const month = [
       "Jan",
       "Feb",
@@ -51,10 +51,21 @@ const ArticleCard: React.FC<ArticleProps> = ({
       "Nov",
       "Dec",
     ];
-    console.log(date);
-    const newDate = `${
-      month[date.getMonth()]
-    } ${date.getDate()} ${date.getFullYear()}`;
+    const day = () => {
+      const day = date.getDate().toString();
+      switch (day) {
+        case "1":
+          return day + "st";
+        case "2":
+          return day + "nd";
+        case "3":
+          return day + "rd";
+        default:
+          return day + "th";
+      }
+    };
+    console.log(date.getFullYear());
+    const newDate = `${month[date.getMonth()]} ${day()} ${date.getFullYear()}`;
     return newDate;
   };
 
