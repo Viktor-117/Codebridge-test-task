@@ -3,28 +3,68 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
-import { Link } from "./ArticleCard.styled";
+import { Link, Arrow, DateText, DateImg } from "./ArticleCard.styled";
+import arrow from "images/arrow.svg";
+import date from "images/date.svg";
 // import { useAppDispatch } from "hooks/hook";
 
 interface ArticleProps {
   imageUrl: string;
   title: string;
   summary: string;
+  publishedAt: string;
 }
 
-const ArticleCard: React.FC<ArticleProps> = ({ imageUrl, title, summary }) => {
+const ArticleCard: React.FC<ArticleProps> = ({
+  imageUrl,
+  title,
+  summary,
+  publishedAt,
+}) => {
   //   const dispatch = useAppDispatch();
+  const shortSummary = () => {
+    if (summary.split(" ").length > 25) {
+      return summary.split(" ").slice(0, 25).join(" ").concat(" ...");
+    } else return summary;
+  };
+
+  const shortTitle = () => {
+    if (title.split(" ").length > 10) {
+      return title.split(" ").slice(0, 10).join(" ").concat(" ...");
+    } else return title;
+  };
+
+  const dateText = () => {
+    const parsedDate: number = Date.parse(publishedAt);
+    const date: Date = new Date(parsedDate * 1000);
+    const month = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    console.log(date);
+    const newDate = `${
+      month[date.getMonth()]
+    } ${date.getDate()} ${date.getFullYear()}`;
+    return newDate;
+  };
 
   return (
     <Card sx={{ maxWidth: 400 }}>
       <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={imageUrl}
-          alt="green iguana"
-        />
-        <CardContent>
+        <CardMedia component="img" height="140" image={imageUrl} alt={title} />
+        <CardContent sx={{ padding: "25px" }}>
+          <DateImg src={date} alt="date" />
+          <DateText>{dateText()}</DateText>
           <Typography
             sx={{
               height: 88,
@@ -37,25 +77,26 @@ const ArticleCard: React.FC<ArticleProps> = ({ imageUrl, title, summary }) => {
             variant="h5"
             component="div"
           >
-            {title}
+            {shortTitle()}
           </Typography>
           <Typography
             sx={{
-              height: 264,
+              height: 120,
               fontFamily: "Montserrat",
               fontSize: 16,
               lineHeight: 1.5,
-              marginBottom: "20px",
             }}
             variant="body2"
             color="text.secondary"
           >
-            {summary}
+            {shortSummary()}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Link to={Artictle}>Read more</Link>
+      <CardActions sx={{ padding: 0 }}>
+        <Link to="article">
+          Read more <Arrow src={arrow} alt="arrow" />
+        </Link>
       </CardActions>
     </Card>
   );
