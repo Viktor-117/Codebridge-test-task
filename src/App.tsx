@@ -4,11 +4,13 @@ import { Route, Routes } from "react-router-dom";
 import { lazy } from "react";
 
 const HomeView = lazy(() => import("./pages/HomeView"));
+const ArticleView = lazy(() => import("./pages/ArticleView"));
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomeView />}></Route>
+      <Route path="/article" element={<ArticleView />} />
     </Routes>
     // <div className="App">
     //   <header className="App-header">

@@ -1,23 +1,41 @@
 import {
   // ActionReducerMapBuilder,
   createSlice,
-  // PayloadAction,
+  PayloadAction,
+  AnyAction,
 } from "@reduxjs/toolkit";
 import fetchArticles from "./operations";
 
-export type Article = {
-  isLoading: boolean;
-  articles: {};
-  error: {}[];
+export type ArticleSchema = {
+  id: number;
+  featured: false;
+  title: "string";
+  url: "string";
+  imageUrl: "string";
+  newsSite: "string";
+  summary: "string";
+  publishedAt: "string";
+  launches: [
+    {
+      id: "string";
+      provider: "string";
+    }
+  ];
+  events: [
+    {
+      id: "string";
+      provider: "string";
+    }
+  ];
 };
 
-type ArticleState = {
-  articles: {}[];
+export type Article = {
+  articles: ArticleSchema[] | [];
   isLoading: boolean;
   error: string | null;
 };
 
-const initialState: ArticleState = {
+const initialState: Article = {
   articles: [],
   isLoading: false,
   error: null,
@@ -41,23 +59,18 @@ const articleSlice = createSlice({
       .addCase(fetchArticles.fulfilled, (state, action) => {
         state.articles = action.payload;
         state.isLoading = false;
+      })
+      .addMatcher(isError, (state, action: PayloadAction<string>) => {
+        state.error = action.payload;
+        state.isLoading = false;
       });
   },
-  //   extraReducers: {
-  //     [fetchArticle.fulfilled](state, action) => {
-  //       state.isLoading = false;
-  //       state.articles = action.payload;
-  //     },
-  //     [fetchArticle.pending]: (state) => {
-  //       state.isLoading = true;
-  //     },
-  //     [fetchArticle.rejected]: (state, action) => {
-  //       state.isLoading = false;
-  //       state.error = action.payload;
-  //     },
-  //   },
 });
 
 const articlesReducer = articleSlice.reducer;
 
 export default articlesReducer;
+
+function isError(action: AnyAction) {
+  return action.type.endsWith("rejected");
+}
