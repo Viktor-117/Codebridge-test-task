@@ -4,7 +4,11 @@ import {
   PayloadAction,
   AnyAction,
 } from "@reduxjs/toolkit";
-import { fetchArticle, fetchFilteredArticle } from "./operations";
+import {
+  fetchArticle,
+  fetchFilteredArticle,
+  fetchArticleById,
+} from "./operations";
 
 export type ArticleSchema = {
   id: number;
@@ -33,6 +37,8 @@ export type Article = {
   articles: ArticleSchema[] | [];
   filteredArticles: ArticleSchema[] | [];
   filtered: boolean;
+  articleById: ArticleSchema | {};
+  location: Location | null;
   isLoading: boolean;
   error: string | null;
 };
@@ -41,6 +47,8 @@ const initialState: Article = {
   articles: [],
   filteredArticles: [],
   filtered: false,
+  articleById: {},
+  location: null,
   isLoading: false,
   error: null,
 };
@@ -53,7 +61,11 @@ const initialState: Article = {
 const articleSlice = createSlice({
   name: "articles",
   initialState,
-  reducers: {},
+  reducers: {
+    setLocation(state, action: PayloadAction<Location>) {
+      state.location = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchArticle.pending, (state) => {
@@ -75,6 +87,15 @@ const articleSlice = createSlice({
         state.filtered = true;
         state.error = null;
       })
+      .addCase(fetchArticleById.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(fetchArticleById.fulfilled, (state, action) => {
+        state.articleById = action.payload;
+        state.isLoading = false;
+        state.error = null;
+      })
       .addMatcher(isError, (state, action: PayloadAction<string>) => {
         state.error = action.payload;
         state.isLoading = false;
@@ -83,6 +104,8 @@ const articleSlice = createSlice({
 });
 
 const articlesReducer = articleSlice.reducer;
+
+export const { setLocation } = articleSlice.actions;
 
 export default articlesReducer;
 

@@ -4,13 +4,16 @@ import { Route, Routes } from "react-router-dom";
 import { lazy } from "react";
 
 const HomeView = lazy(() => import("./pages/HomeView"));
+const ArticlesList = lazy(() => import("components/ArticlesList"));
 const ArticleView = lazy(() => import("./pages/ArticleView"));
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomeView />}></Route>
-      <Route path="/article/:articleId" element={<ArticleView />} />
+      <Route path="/" element={<HomeView />}>
+        <Route index element={<ArticlesList />} />
+        <Route path="/articles/:articleId" element={<ArticleView />} />
+      </Route>
     </Routes>
     // <div className="App">
     //   <header className="App-header">

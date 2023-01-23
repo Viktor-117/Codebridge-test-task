@@ -9,13 +9,13 @@ import TextField from "@mui/material/TextField";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { RotatingLines } from "react-loader-spinner";
-import { Container, Box } from "./HomeView.styled";
-import { fetchArticle, fetchFilteredArticle } from "../redux/operations";
+import { Container, Box } from "./ArticlesList.styled";
+import { fetchArticle, fetchFilteredArticle } from "redux/operations";
 import ArticleCard from "components/ArticleCard";
 
 const theme = createTheme({ spacing: 10 });
 
-const HomeView: React.FC = () => {
+const ArticlesList: React.FC = () => {
   const articles = useAppSelector((state) => state.articles.articles);
   const filteredArticles = useAppSelector(
     (state) => state.articles.filteredArticles
@@ -105,4 +105,4 @@ const HomeView: React.FC = () => {
   );
 };
 
-export default HomeView;
+export default ArticlesList;

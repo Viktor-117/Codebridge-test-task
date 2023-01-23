@@ -3,12 +3,17 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
-import { Link, Arrow, DateText, DateImg } from "./ArticleCard.styled";
+import { useNavigate } from "react-router-dom";
+import { Button, Arrow, DateText, DateImg } from "./ArticleCard.styled";
 import arrow from "images/arrow.svg";
 import date from "images/date.svg";
-// import { useAppDispatch } from "hooks/hook";
+import { useAppDispatch } from "hooks/hook";
+import { fetchArticleById } from "redux/operations";
+import { useLocation } from "react-router-dom";
+import { setLocation } from "redux/articleSlice";
 
 interface ArticleProps {
+  id: number;
   filter?: string;
   imageUrl: string;
   title: string;
@@ -17,14 +22,26 @@ interface ArticleProps {
 }
 
 const ArticleCard: React.FC<ArticleProps> = ({
+  id,
   filter,
   imageUrl,
   title,
   summary,
   publishedAt,
 }) => {
-  console.log(filter);
-  //   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  const location: any = useLocation();
+  // console.log(location);
+
+  const handleClick = () => {
+    dispatch(fetchArticleById(id));
+    dispatch(setLocation(location));
+    navigate(`/articles/:${id}`);
+    // setSearchParams(id);
+  };
+
   const shortSummary = () => {
     if (summary.length > 100) {
       return summary.slice(0, 100).concat("...");
@@ -86,7 +103,7 @@ const ArticleCard: React.FC<ArticleProps> = ({
 
   return (
     <Card sx={{ maxWidth: 400 }}>
-      <CardActionArea>
+      <CardActionArea onClick={handleClick}>
         <CardMedia component="img" height="140" image={imageUrl} alt={title} />
         <CardContent sx={{ padding: "25px", paddingBottom: 0 }}>
           <DateImg src={date} alt="date" />
@@ -120,9 +137,12 @@ const ArticleCard: React.FC<ArticleProps> = ({
         </CardContent>
       </CardActionArea>
       <CardActions sx={{ padding: 0 }}>
-        <Link to="article">
+        <Button
+          onClick={handleClick}
+          // state={{ from: location }}
+        >
           Read more <Arrow src={arrow} alt="arrow" />
-        </Link>
+        </Button>
       </CardActions>
     </Card>
   );

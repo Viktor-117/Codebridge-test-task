@@ -1,14 +1,18 @@
 import styled from "styled-components";
-import { NavLink } from "react-router-dom";
 
-export const Link = styled(NavLink)`
+export const Button = styled.button`
   font-family: Montserrat;
   color: #363636;
+  background-color: transparent;
+  border: none;
   font-weight: 700;
   font-size: 16;
   line-height: 1.5;
   padding: 25px;
-  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #f6f6f6;
+  }
 `;
 
 export const Arrow = styled.img`
