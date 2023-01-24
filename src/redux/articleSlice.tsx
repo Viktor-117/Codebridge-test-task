@@ -1,47 +1,10 @@
-import {
-  // ActionReducerMapBuilder,
-  createSlice,
-  PayloadAction,
-  AnyAction,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, AnyAction } from "@reduxjs/toolkit";
 import {
   fetchArticle,
   fetchFilteredArticle,
   fetchArticleById,
 } from "./operations";
-
-export type ArticleSchema = {
-  id: number;
-  featured: false;
-  title: "string";
-  url: "string";
-  imageUrl: "string";
-  newsSite: "string";
-  summary: "string";
-  publishedAt: "string";
-  launches: [
-    {
-      id: "string";
-      provider: "string";
-    }
-  ];
-  events: [
-    {
-      id: "string";
-      provider: "string";
-    }
-  ];
-};
-
-export type Article = {
-  articles: ArticleSchema[] | [];
-  filteredArticles: ArticleSchema[] | [];
-  filtered: boolean;
-  articleById: ArticleSchema | {};
-  location: Location | null;
-  isLoading: boolean;
-  error: string | null;
-};
+import { Article } from "types/types";
 
 const initialState: Article = {
   articles: [],
@@ -53,10 +16,10 @@ const initialState: Article = {
   error: null,
 };
 
-// const handleFulfilled = (state: Article, action: PayloadAction<string>) => {
-//   state.isLoading = false;
-//   state.articles = action.payload;
-// };
+const handlePending = (state: Article) => {
+  state.isLoading = true;
+  state.error = null;
+};
 
 const articleSlice = createSlice({
   name: "articles",
@@ -68,29 +31,20 @@ const articleSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchArticle.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(fetchArticle.pending, handlePending)
       .addCase(fetchArticle.fulfilled, (state, action) => {
         state.articles = action.payload;
         state.isLoading = false;
         state.error = null;
       })
-      .addCase(fetchFilteredArticle.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(fetchFilteredArticle.pending, handlePending)
       .addCase(fetchFilteredArticle.fulfilled, (state, action) => {
         state.filteredArticles = action.payload;
         state.isLoading = false;
         state.filtered = true;
         state.error = null;
       })
-      .addCase(fetchArticleById.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
+      .addCase(fetchArticleById.pending, handlePending)
       .addCase(fetchArticleById.fulfilled, (state, action) => {
         state.articleById = action.payload;
         state.isLoading = false;

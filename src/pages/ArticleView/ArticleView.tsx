@@ -1,6 +1,6 @@
 import Article from "components/Article";
 import { useAppSelector } from "hooks/hook";
-import { ArticleSchema } from "redux/articleSlice";
+import { ArticleSchema } from "types/types";
 
 const ArticleView: React.FC = () => {
   const article = useAppSelector(

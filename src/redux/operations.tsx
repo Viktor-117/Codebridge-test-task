@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ArticleSchema } from "./articleSlice";
+import { ArticleSchema } from "types/types";
 
 axios.defaults.baseURL = "https://api.spaceflightnewsapi.net/";
 
@@ -41,5 +41,3 @@ export const fetchArticleById = createAsyncThunk<
   }
   return response.data as ArticleSchema;
 });
-
-// export default fetchArticle;

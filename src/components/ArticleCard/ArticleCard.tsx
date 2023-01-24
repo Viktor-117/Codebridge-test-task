@@ -9,8 +9,8 @@ import arrow from "images/arrow.svg";
 import date from "images/date.svg";
 import { useAppDispatch } from "hooks/hook";
 import { fetchArticleById } from "redux/operations";
-import { useLocation } from "react-router-dom";
-import { setLocation } from "redux/articleSlice";
+// import { useLocation } from "react-router-dom";
+// import { setLocation } from "redux/articleSlice";
 
 interface ArticleProps {
   id: number;
@@ -32,12 +32,12 @@ const ArticleCard: React.FC<ArticleProps> = ({
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   // const [searchParams, setSearchParams] = useSearchParams();
-  const location: any = useLocation();
+  // const location: any = useLocation();
   // console.log(location);
 
   const handleClick = () => {
     dispatch(fetchArticleById(id));
-    dispatch(setLocation(location));
+    // dispatch(setLocation(location));
     navigate(`/articles/:${id}`);
     // setSearchParams(id);
   };
