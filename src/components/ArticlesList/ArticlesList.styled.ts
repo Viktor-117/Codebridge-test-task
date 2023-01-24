@@ -5,7 +5,7 @@ export const Container = styled.div`
   width: 1290px;
 `;
 
-export const Box = styled.div`
+export const List = styled.ul`
   display: grid;
   grid-template-columns: 400px 400px 400px;
   gap: 45px;

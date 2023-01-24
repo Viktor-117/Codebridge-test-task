@@ -1,4 +1,3 @@
-// import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { Suspense } from "react";
 import { useAppDispatch, useAppSelector } from "hooks/hook";
@@ -9,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { RotatingLines } from "react-loader-spinner";
-import { Container, Box } from "./ArticlesList.styled";
+import { Container, List } from "./ArticlesList.styled";
 import { fetchArticle, fetchFilteredArticle } from "redux/operations";
 import ArticleCard from "components/ArticleCard";
 
@@ -69,6 +68,7 @@ const ArticlesList: React.FC = () => {
             ),
           }}
         />
+
         <Typography
           sx={{
             fontWeight: 600,
@@ -83,23 +83,41 @@ const ArticlesList: React.FC = () => {
         >
           Results: {articles.length}
         </Typography>
-        <Box>
+        <List>
           <Suspense>
             {isLoading && <RotatingLines strokeColor="#3B8AD9" />}
             {articles &&
               !filtered &&
               articles.map((article) => {
-                return <ArticleCard key={article.id} {...article} />;
+                return (
+                  <ArticleCard
+                    key={article.id}
+                    filter={value}
+                    id={article.id}
+                    imageUrl={article.imageUrl}
+                    title={article.title}
+                    summary={article.summary}
+                    publishedAt={article.publishedAt}
+                  />
+                );
               })}
             {filteredArticles &&
               filtered &&
               filteredArticles.map((article) => {
                 return (
-                  <ArticleCard key={article.id} filter={value} {...article} />
+                  <ArticleCard
+                    key={article.id}
+                    filter={value}
+                    id={article.id}
+                    imageUrl={article.imageUrl}
+                    title={article.title}
+                    summary={article.summary}
+                    publishedAt={article.publishedAt}
+                  />
                 );
               })}
           </Suspense>
-        </Box>
+        </List>
       </ThemeProvider>
     </Container>
   );

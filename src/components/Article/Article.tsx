@@ -1,5 +1,5 @@
 import { useAppSelector } from "hooks/hook";
-import { ArticleSchema } from "redux/articleSlice";
+import { ArticleSchema } from "types/types";
 import {
   Img,
   Header,
