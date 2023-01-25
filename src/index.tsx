@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename="/Codebridge_test_task/">
+      <BrowserRouter basename="Codebridge_test_task">
         <App />
       </BrowserRouter>
     </Provider>
