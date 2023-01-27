@@ -8,7 +8,7 @@ import { Article } from "types/types";
 
 const initialState: Article = {
   articles: [],
-  filteredArticles: [],
+  filteredArticles: null,
   filtered: false,
   activeArticle: undefined,
   location: null,
