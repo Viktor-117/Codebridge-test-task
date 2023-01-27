@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { Button, Arrow, DateText, DateImg } from "./ArticleCard.styled";
 import arrow from "images/arrow.svg";
 import date from "images/date.svg";
-import { useAppDispatch } from "hooks/hook";
-import { fetchArticleById } from "redux/operations";
 import { dateText, Title, Text } from "./articleProcessing";
 
 export interface ArticleProps {
@@ -27,12 +25,10 @@ const ArticleCard: React.FC<ArticleProps> = ({
   summary,
   publishedAt,
 }) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    dispatch(fetchArticleById(id));
-    navigate(`/articles/:${id}`);
+    navigate(`/articles/${id}`);
   };
 
   return (

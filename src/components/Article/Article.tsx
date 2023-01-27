@@ -12,9 +12,11 @@ import {
 import arrow from "images/arrow-right.svg";
 
 const Article: React.FC = () => {
-  const { imageUrl, title, summary } = useAppSelector(
-    (state) => state.articles.articleById
+  const article = useAppSelector(
+    (state) => state.articles.activeArticle
   ) as ArticleSchema;
+
+  const { imageUrl, title, summary } = article;
 
   return (
     <Box>
