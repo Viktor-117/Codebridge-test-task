@@ -23,7 +23,7 @@ export type ArticleSchema = {
 
 export type Article = {
   articles: ArticleSchema[];
-  filteredArticles: ArticleSchema[];
+  filteredArticles: ArticleSchema[] | null;
   filtered: boolean;
   activeArticle?: ArticleSchema | undefined;
   location: Location | null;

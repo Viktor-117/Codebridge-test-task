@@ -82,7 +82,8 @@ const ArticlesList: React.FC = () => {
             borderBottom: "1px solid #EAEAEA",
           }}
         >
-          Results: {articles.length}
+          Results:{" "}
+          {!filteredArticles ? articles.length : filteredArticles.length}
         </Typography>
         {isLoading && (
           <LoaderWrap>
