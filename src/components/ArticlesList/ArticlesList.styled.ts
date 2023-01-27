@@ -12,3 +12,9 @@ export const List = styled.ul`
   margin-top: 45px;
   padding-left: 0;
 `;
+
+export const LoaderWrap = styled.div`
+  text-align: center;
+  margin-top: 50px;
+  width: 100%;
+`;

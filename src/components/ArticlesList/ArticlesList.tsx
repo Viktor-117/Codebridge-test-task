@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@mui/material";
 import { RotatingLines } from "react-loader-spinner";
-import { Container, List } from "./ArticlesList.styled";
+import { Container, List, LoaderWrap } from "./ArticlesList.styled";
 import { fetchArticle, fetchFilteredArticle } from "redux/operations";
 import ArticleCard from "components/ArticleCard";
 
@@ -28,7 +28,8 @@ const ArticlesList: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchArticle());
-  }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleChange = (e: { target: { value: string } }) => {
     setValue(e.target.value);
@@ -83,9 +84,13 @@ const ArticlesList: React.FC = () => {
         >
           Results: {articles.length}
         </Typography>
+        {isLoading && (
+          <LoaderWrap>
+            <RotatingLines strokeColor="#3B8AD9" />
+          </LoaderWrap>
+        )}
         <List>
           <Suspense>
-            {isLoading && <RotatingLines strokeColor="#3B8AD9" />}
             {articles &&
               !filtered &&
               articles.map((article) => {

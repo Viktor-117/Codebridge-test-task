@@ -8,10 +8,10 @@ export const fetchArticle = createAsyncThunk<
   ArticleSchema[],
   undefined,
   { rejectValue: string }
->("articles/fetchArticles", async (_, thunkAPI) => {
+>("articles/fetchArticles", async (_, { rejectWithValue }) => {
   const response = await axios.get("v3/articles?_limit=9");
   if (!response.data) {
-    return thunkAPI.rejectWithValue("Ooops! Something went wrong");
+    return rejectWithValue("Ooops! Something went wrong");
   }
   return response.data as ArticleSchema[];
 });
@@ -32,7 +32,7 @@ export const fetchFilteredArticle = createAsyncThunk<
 
 export const fetchArticleById = createAsyncThunk<
   ArticleSchema,
-  number,
+  string | undefined,
   { rejectValue: string }
 >("articles/fetchArticleById", async (id, { rejectWithValue }) => {
   const response = await axios.get(`v3/articles/${id}`);

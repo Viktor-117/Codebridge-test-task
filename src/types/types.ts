@@ -1,6 +1,6 @@
 export type ArticleSchema = {
   id: number;
-  featured: false;
+  featured: boolean;
   title: "string";
   url: "string";
   imageUrl: "string";
@@ -22,10 +22,10 @@ export type ArticleSchema = {
 };
 
 export type Article = {
-  articles: ArticleSchema[] | [];
-  filteredArticles: ArticleSchema[] | [];
+  articles: ArticleSchema[];
+  filteredArticles: ArticleSchema[];
   filtered: boolean;
-  articleById: ArticleSchema | {};
+  activeArticle?: ArticleSchema | undefined;
   location: Location | null;
   isLoading: boolean;
   error: string | null;

@@ -10,7 +10,7 @@ const initialState: Article = {
   articles: [],
   filteredArticles: [],
   filtered: false,
-  articleById: {},
+  activeArticle: undefined,
   location: null,
   isLoading: false,
   error: null,
@@ -46,7 +46,7 @@ const articleSlice = createSlice({
       })
       .addCase(fetchArticleById.pending, handlePending)
       .addCase(fetchArticleById.fulfilled, (state, action) => {
-        state.articleById = action.payload;
+        state.activeArticle = action.payload;
         state.isLoading = false;
         state.error = null;
       })
